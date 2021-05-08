@@ -20,6 +20,10 @@ const account2 = {
 const accounts = [account1, account2];
 
 const containerMovements = document.querySelector(".movements");
+const labelBalance = document.querySelector(".balance__value");
+const labelSumIn = document.querySelector(".summary__value--in");
+const labelSumOut = document.querySelector(".summary__value--out");
+const labelSumInterest = document.querySelector(".summary__value--interest");
 
 const displayMovements = function(movements) {
   containerMovements.innerHTML = "";
@@ -37,4 +41,33 @@ const displayMovements = function(movements) {
   });
 };
 
+const calcDisplayBalance = function(acc) {
+  acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
+  labelBalance.textContent = `${acc.balance}€`;
+};
+
+const calcDisplaySummary = function(acc) {
+  const incomes = acc.movements
+    .filter(mov => mov > 0)
+    .reduce((acc, mov) => acc + mov, 0);
+  labelSumIn.textContent = `${incomes}€`;
+
+  const out = acc.movements
+    .filter(mov => mov < 0)
+    .reduce((acc, mov) => acc + mov, 0);
+  labelSumOut.textContent = `${Math.abs(out)}€`;
+
+  //   const interest = acc.movements
+  //     .filter(mov => mov > 0)
+  //     .map(deposit => (deposit * acc.interestRate) / 100)
+  //     .filter((int, i, arr) => {
+  //       //console.log(arr);
+  //       return int >= 1;
+  //     })
+  //     .reduce((acc, int) => acc + int, 0);
+  //   labelSumInterest.textContent = `${interest}€`;
+};
+
 displayMovements(account1.movements);
+calcDisplayBalance(account1);
+calcDisplaySummary(account1);
