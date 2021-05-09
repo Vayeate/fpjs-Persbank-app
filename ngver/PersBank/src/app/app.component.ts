@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { accounts } from '/home/vayeate/Documents/fpjs/ngver/PersBank/src/app/accounts';
 
 @Component({
   selector: 'app-root',
@@ -7,17 +8,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'PersBank';
-  account1 = {
-    owner: 'Aleksei Uljassov',
-    movements: [50, 450, -250, 1500, -350, -130, -70, 800],
-    interestRate: 1.2, // %
-    pin: 1111
-  };
-
-  account2 = {
-    owner: 'Kaire Krants',
-    movements: [2500, 700, -150, -790, -3210, -1000, 8500, -300],
-    interestRate: 1.5,
-    pin: 2222
-  };
+  accounts = accounts;
 }
