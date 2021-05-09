@@ -9,4 +9,9 @@ import { accounts } from './accounts';
 export class AppComponent {
   title = 'PersBank';
   accounts = accounts;
+
+  getAllOut() {
+    // this.accounts
+    return 'very many dollars'
+  }
 }

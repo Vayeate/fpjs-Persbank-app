@@ -32,14 +32,11 @@
   </div>
 
   <!-- Transactions -->
-  <div class="movements">
-    <div class="movements__row">
+  <div class="movements" *ngFor="let account of accounts">
+    <div class="movements__row" *ngFor="let movement of account.movements">
       <div class="movements__type movements__type--deposit">2 deposit</div>
       <div class="movements__date">3 days ago</div>
-      <!-- <div class="movements__value">4 000€</div> -->
-      <div *ngFor="let account of accounts">
-        {{ account.movements }}
-      </div>
+      <div class="movements__value">{{movement}} €</div>
     </div>
     <div class="movements__row">
       <div class="movements__type movements__type--withdrawal">
@@ -55,7 +52,7 @@
     <p class="summary__label">In</p>
     <p class="summary__value summary__value--in">0000€</p>
     <p class="summary__label">Out</p>
-    <p class="summary__value summary__value--out">0000€</p>
+    <p class="summary__value summary__value--out">{{this.getAllOut()}}</p>
     <p class="summary__label">Interest</p>
     <p class="summary__value summary__value--interest">0000€</p>
     <button class="btn--sort">&#x2193; SORT</button>
