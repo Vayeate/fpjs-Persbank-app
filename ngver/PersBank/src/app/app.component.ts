@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { accounts } from '/home/vayeate/Documents/fpjs/ngver/PersBank/src/app/accounts';
+import { accounts } from './accounts';
 
 @Component({
   selector: 'app-root',
