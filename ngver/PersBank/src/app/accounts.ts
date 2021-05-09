@@ -12,3 +12,5 @@ export const accounts = [
     pin: 2222
   }
 ];
+
+export const labelBalance = document.querySelector('.balance__value');
