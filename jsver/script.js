@@ -32,11 +32,14 @@ const containerApp = document.querySelector(".app");
 const inputTransferTo = document.querySelector(".form__input--to");
 const inputTransferAmount = document.querySelector(".form__input--amount");
 const btnTransfer = document.querySelector(".form__btn--transfer");
+const btnSort = document.querySelector(".btn--sort");
 
-const displayMovements = function(movements) {
+const displayMovements = function(movements, sort = false) {
   containerMovements.innerHTML = "";
 
-  movements.forEach(function(mov, i) {
+  const mov = sort ? movements.slice().sort((a, b) => a - b) : movements;
+
+  mov.forEach(function(mov, i) {
     const type = mov > 0 ? "deposit" : "withdrawal";
 
     const html = `
@@ -144,4 +147,11 @@ btnTransfer.addEventListener("click", function(e) {
     // Update UI
     updateUI(currentAccount);
   }
+});
+
+let sorted = false;
+btnSort.addEventListener("click", function(e) {
+  e.preventDefault();
+  displayMovements(currentAccount.movements, !sorted);
+  sorted = !sorted;
 });
