@@ -33,6 +33,9 @@ const inputTransferTo = document.querySelector(".form__input--to");
 const inputTransferAmount = document.querySelector(".form__input--amount");
 const btnTransfer = document.querySelector(".form__btn--transfer");
 const btnSort = document.querySelector(".btn--sort");
+const btnClose = document.querySelector(".form__btn--close");
+const inputCloseUsername = document.querySelector(".form__input--user");
+const inputClosePin = document.querySelector(".form__input--pin");
 
 const displayMovements = function(movements, sort = false) {
   containerMovements.innerHTML = "";
@@ -147,6 +150,26 @@ btnTransfer.addEventListener("click", function(e) {
     // Update UI
     updateUI(currentAccount);
   }
+});
+
+btnClose.addEventListener("click", function(e) {
+  e.preventDefault();
+  if (
+    inputCloseUsername.value === currentAccount.username &&
+    Number(inputClosePin.value) === currentAccount.pin
+  ) {
+    const index = accounts.findIndex(
+      acc => acc.username === currentAccount.username
+    );
+    console.log(index);
+
+    // Delete account
+    accounts.splice(index, 1);
+
+    // Hide UI
+    containerApp.style.opacity = 0;
+  }
+  inputCloseUsername.value = inputClosePin.value = "";
 });
 
 let sorted = false;
