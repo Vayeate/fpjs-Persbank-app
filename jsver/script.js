@@ -36,6 +36,8 @@ const btnSort = document.querySelector(".btn--sort");
 const btnClose = document.querySelector(".form__btn--close");
 const inputCloseUsername = document.querySelector(".form__input--user");
 const inputClosePin = document.querySelector(".form__input--pin");
+const btnLoan = document.querySelector(".form__btn--loan");
+const inputLoanAmount = document.querySelector(".form__input--loan-amount");
 
 const displayMovements = function(movements, sort = false) {
   containerMovements.innerHTML = "";
@@ -49,7 +51,7 @@ const displayMovements = function(movements, sort = false) {
     <div class="movements__row">
       <div class="movements__type movements__type--${type}">${i +
       1} ${type}</div>
-      <div class="movements__value">${mov}€</div>
+      <div class="movements__value">${mov.toFixed(2)}€</div>
     </div>`;
     containerMovements.insertAdjacentHTML("afterbegin", html);
   });
@@ -57,29 +59,29 @@ const displayMovements = function(movements, sort = false) {
 
 const calcDisplayBalance = function(acc) {
   acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
-  labelBalance.textContent = `${acc.balance}€`;
+  labelBalance.textContent = `${acc.balance.toFixed(2)}€`;
 };
 
 const calcDisplaySummary = function(acc) {
   const incomes = acc.movements
     .filter(mov => mov > 0)
     .reduce((acc, mov) => acc + mov, 0);
-  labelSumIn.textContent = `${incomes}€`;
+  labelSumIn.textContent = `${incomes.toFixed(2)}€`;
 
   const out = acc.movements
     .filter(mov => mov < 0)
     .reduce((acc, mov) => acc + mov, 0);
-  labelSumOut.textContent = `${Math.abs(out)}€`;
+  labelSumOut.textContent = `${Math.abs(out).toFixed(2)}€`;
 
-  //   const interest = acc.movements
-  //     .filter(mov => mov > 0)
-  //     .map(deposit => (deposit * acc.interestRate) / 100)
-  //     .filter((int, i, arr) => {
-  //       //console.log(arr);
-  //       return int >= 1;
-  //     })
-  //     .reduce((acc, int) => acc + int, 0);
-  //   labelSumInterest.textContent = `${interest}€`;
+  const interest = acc.movements
+    .filter(mov => mov > 0)
+    .map(deposit => (deposit * acc.interestRate) / 100)
+    .filter((int, i, arr) => {
+      //console.log(arr);
+      return int >= 1;
+    })
+    .reduce((acc, int) => acc + int, 0);
+  labelSumInterest.textContent = `${interest.toFixed(2)}€`;
 };
 
 const createUsernames = function(accs) {
@@ -150,6 +152,21 @@ btnTransfer.addEventListener("click", function(e) {
     // Update UI
     updateUI(currentAccount);
   }
+});
+
+btnLoan.addEventListener("click", function(e) {
+  e.preventDefault();
+
+  const amount = Math.floor(inputLoanAmount.value);
+
+  if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
+    //Add movement
+    currentAccount.movements.push(amount);
+
+    // Update UI
+    updateUI(currentAccount);
+  }
+  inputLoanAmount.value = "";
 });
 
 btnClose.addEventListener("click", function(e) {
